@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <title>更新表格</title>
+        <link rel="stylesheet" href="https://www.layuicdn.com/layui-v2.7.6/css/layui.css">
+    </head>
+    <body  >
+        <div style="width:1200px; margin: 20px auto">
+            <form class="layui-form">
+                  <div class="layui-form-item">
+                    <div class="layui-inline">
+                      <label class="layui-form-label" style="width: 40px; padding-left: 0;">进价</label>
+                      <div class="layui-input-inline" style="width: 80px;">
+                        <input type="tel" name="price" lay-verify="required|number" autocomplete="off" class="layui-input" value="90">
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label" style="width: 40px;">重量</label>
+                      <div class="layui-input-inline" style="width: 80px;">
+                        <input type="text" name="weight" lay-verify="required|number" autocomplete="off" class="layui-input" value="900">
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label" style="width: 40px;">汇率</label>
+                      <div class="layui-input-inline" style="width: 50px;">
+                        <input type="text" name="exchange_rate" lay-verify="required|number" autocomplete="off" class="layui-input"  value="7">
+                      </div>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label" style="width: 60px;">利润率</label>
+                      <div class="layui-input-inline" style="width: 50px;">
+                        <input type="text" name="profit_margin" autocomplete="off" lay-verify="required|number" class="layui-input" value="15">
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">%</div>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label" style="width: 60px;">折扣率</label>
+                      <div class="layui-input-inline" style="width: 50px;">
+                        <input type="text" name="discount" autocomplete="off" lay-verify="required|number" class="layui-input" placeholder="%" value="50">
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">%</div>
+                    </div>
+                    <div class="layui-inline">
+                      <label class="layui-form-label" style="width: 40px;">佣金</label>
+                      <div class="layui-input-inline" style="width: 50px;">
+                        <input type="text" name="commission" disabled="disabled" class="layui-input" value="8">
+                      </div>
+                      <div class="layui-form-mid layui-word-aux">%</div>
+                    </div>
+                    <div class="layui-inline">
+                      <div class="layui-input-inline" style="width: 80px;">
+                        <button type="submit" class="layui-btn" lay-submit="" lay-filter="demo1">计算</button>
+                      </div>
+                    </div>
+                  </div>
+            </form>
+            <hr class="layui-border-green">
+            <div class="layui-form">
+              <table class="layui-table" id="main"></table>
+            </div>
+            <hr class="layui-border-green">
+            <div class="layui-form">
+              <table class="layui-table" id="ListTable">
+                  <tr><td>俄罗斯</td><td>美国</td><td>德国</td><td>加拿大</td><td>西班牙</td><td>法国</td><td>英国</td><td>荷兰</td><td>以色列</td><td>巴西</td><td>智利</td><td>澳大利亚</td><td>乌克兰</td><td>白俄罗斯</td><td>日本</td><td>泰国</td><td>新加坡</td><td>韩国</td><td>印度尼西亚</td><td>马来西亚</td><td>菲律宾</td><td>越南</td><td>意大利</td><td>沙特阿拉伯</td><td>阿联酋</td><td>波兰</td><td>土耳其</td><td>葡萄牙</td><td>比利时</td><td>哥伦比亚</td><td>墨西哥</td><td>摩洛哥</td></tr>
+              </table>
+            </div>
+              <button class="layui-btn btn"  data-clipboard-target="#ListTable">点击复制国家和价钱</button>
+              <button class="layui-btn btn"  data-clipboard-target="#ListTablePrice">点击复制价钱</button>
+            <div class="layui-form">
+              <table class="layui-table" id="MoreTable">
+                  
+              </table>
+            </div>
+        </div>
+   
+        
+    <script src="https://cdn.bootcdn.net/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
+    <script src="https://www.layuicdn.com/layui-v2.7.6/layui.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/clipboard.js/2.0.11/clipboard.min.js"></script>
+    <script type="text/javascript" charset="utf-8">
+        var _countryList = [
+            "俄罗斯",
+            "美国",
+            "德国",
+            "加拿大",
+            "西班牙",
+            "法国",
+            "英国",
+            "荷兰",
+            "以色列",
+            "巴西",
+            "智利",
+            "澳大利亚",
+            "乌克兰",
+            "白俄罗斯",
+            "日本",
+            "泰国",
+            "新加坡",
+            "韩国",
+            "印度尼西亚",
+            "马来西亚",
+            "菲律宾",
+            "越南",
+            "意大利",
+            "沙特阿拉伯",
+            "阿联酋",
+            "波兰",
+            "土耳其",
+            "葡萄牙",
+            "比利时",
+            "哥伦比亚",
+            "墨西哥",
+            "摩洛哥",
+            ];
+
+
+            var _freightList = [
+            {
+                country: "俄罗斯",
+                line: "无忧标准",
+                area: "包邮",
+                deliveryFee: 75,
+                operatingFee: 18.8,
+            },
+            {
+                country: "美国",
+                line: "无忧标准",
+                area: "包邮",
+                deliveryFee: 91,
+                operatingFee: 12.5,
+            },
+            {
+                country: "加拿大",
+                line: "无忧标准",
+                area: "包邮",
+                deliveryFee: 109.5,
+                operatingFee: 27.2,
+            },
+            ];
+
+
+
+        var _cols = [[
+        {field: 'country', title: '国家', width: 188}
+        ,{field: 'line', title: '线路', width: 100, align: 'center'}
+        ,{field: 'area', title: '区域', width: 100, align: 'center'}
+        ,{field: 'deliveryFee', title: '配送费', width: 100, align: 'center'}
+        ,{field: 'operatingFee', title: '挂号费', width: 100, align: 'center'}
+        ,{field: 'freight', title: '运费', width: 100, align: 'center'}
+        ,{field: 'cost', title: '成本', width: 100, align: 'center'}
+        ,{field: 'profit_margin', title: '利润率', width: 100, align: 'center'}
+        ,{field: 'price_cn', title: '价格(￥)', width: 100, align: 'center'}
+        ,{field: 'price_us', title: '价格($)', width: 100, align: 'center'}
+        ,{field: 'discount_price', title: '折扣价($)', width: 100, align: 'center'}
+        ]]
+
+        var tr1 = '<tr>', tr2 = '<tr id="ListTablePrice">';
+        for(var i=0; i < _countryList.length;  i++) {
+           tr1 += `<td>${_countryList[i]}</td>`
+           tr2 += `<td>${(i + 1) * 10}</td>`
+        }
+        // $('#ListTable').append(tr1)
+        $('#ListTable').append(tr2)
+        
+        var tbaleWidth = $('#ListTable').width();
+        if (tbaleWidth > 1200) {
+            var val = (tbaleWidth - 1200 ) / 2;
+            var min = 1200 /tbaleWidth
+            $('#ListTable').css({'marginLeft': `-${val}px`,'transform': `scale(${min})`})
+        }
+        
+        function MathCeil(n) {
+            return Math.ceil( n * 100 ) / 100;
+        }
+        
+    </script>
+    <script>
+        layui.use('table', function(){
+          var table = layui.table, $ = layui.$, form = layui.form;
+          var clipboard = new ClipboardJS('.btn');
+          
+            var tb = table.render({
+                elem: '#main',
+                cols: _cols,
+                data: _freightList
+            })
+          
+            form.on('submit(demo1)', function(data){
+                var data = data.field
+                tb.reload({
+                    elem: '#main',
+                    cols: _cols,
+                    data: _freightList.map( function (v) {
+                        var freight = MathCeil( Number(data.weight) * v.deliveryFee / 1000 + v.operatingFee );
+                        var cost = freight + Number(data.price);
+                        var price_cn = MathCeil( cost / (1 - Number(data.profit_margin) / 100 - Number(data.commission) / 100) );
+                        var price_us = MathCeil( price_cn / Number(data.exchange_rate) );
+                        var discount_price = MathCeil( price_us / (1 - Number(data.discount) / 100) );
+                        return { 
+                            ...v, 
+                            freight: freight,
+                            cost: cost,
+                            profit_margin: data.profit_margin + '%',
+                            price_cn: price_cn,
+                            price_us: price_us,
+                            discount_price: discount_price
+                        }
+                    })
+                })
+                return false;
+              });
+          
+            clipboard.on('success', function(e) {
+                e.clearSelection();
+                layer.msg('复制成功')
+            });
+            
+            clipboard.on('error', function(e) {
+                layer.msg('复制失败')
+            });
+
+
+        });
+    </script>
+    </body>
+</html>
